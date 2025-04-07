@@ -5,6 +5,11 @@ import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
 import FeedbackData from './Data/FeedbackData'
 import FeedbackStats from './components/FeedbackStats'
+import FeedbackForm from './components/FeedbackForm'
+import {v4 as uuidv4} from 'uuid'
+import {BrowserRouter as Router, Route, Routes} from 'react-router'
+import AboutPage from './Pages/AboutPage'
+import AboutIconLink from './components/AboutIconLink'
 
 
 function App() {
@@ -16,13 +21,32 @@ function App() {
       setFeedback(feedback.filter((item)=> item.id!== id))
     }
  }
+
+ const addFeedback= (newFeedback) => {
+      newFeedback.id=uuid()
+      setFeedback([newFeedback,...feedback])
+ }
+
+ 
   return (
     <>
+    <Router>
     <Header />
     <div className="container">
-      <FeedbackStats feedback={feedback}/>
-      <FeedbackList feedback={feedback} deleteFeedback={deleteFeedback}/>
+      <Routes>
+        <Route path='/' element={
+          <>
+            <FeedbackForm addFeedback={addFeedback}/>
+            <FeedbackStats feedback={feedback}/>
+            <FeedbackList feedback={feedback} deleteFeedback={deleteFeedback}/>
+          </>
+        }/>
+
+        <Route path='/about' element={<AboutPage/>}/>
+      </Routes>
+      <AboutIconLink />
    </div>
+   </Router>
    </>
   )
 }
