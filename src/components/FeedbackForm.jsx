@@ -46,7 +46,6 @@ function FeedbackForm() {
        }else{
         addFeedback(newFeedback)
        }
-        setId((prev) => prev + 1)
         setText('')
       }
        
